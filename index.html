@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kunal | Digital Twin</title>
+    <meta
+      name="description"
+      content="A cinematic single-page digital twin interface for Kunal."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <canvas class="starfield" aria-hidden="true"></canvas>
+
+    <main class="page-shell">
+      <section class="hero">
+        <p class="hero-subtitle">Digital Twin</p>
+        <h1 class="hero-title">Kunal</h1>
+        <p class="hero-copy">
+          A public AI demo shaped around curated memories, reflection, priorities,
+          and calm decision-making.
+        </p>
+      </section>
+
+      <section class="chat-shell" aria-label="Kunal chat interface">
+        <header class="chat-shell__header">
+          <div>
+            <p class="chat-shell__eyebrow">Interface</p>
+            <h2>Conversation</h2>
+          </div>
+          <div
+            class="status-pill"
+            id="status-pill"
+            data-mode="local-preview"
+            aria-label="Prototype status"
+          >
+            <span class="status-pill__dot"></span>
+            <span id="status-label">Local Preview</span>
+          </div>
+        </header>
+
+        <p class="chat-shell__notice">
+          Public AI demo based on curated memories. It reflects Kunal's thinking style,
+          but it is not the real Kunal or a private communication channel.
+        </p>
+
+        <div class="messages" id="messages" aria-live="polite">
+          <article class="message message--assistant">
+            <div class="message__meta">
+              <span>Kunal</span>
+              <span>Digital Twin</span>
+            </div>
+            <div class="message__bubble">
+              Ask about work, decisions, or how this demo reflects Kunal's way of
+              thinking through pressure.
+            </div>
+          </article>
+        </div>
+
+        <div class="starter-prompts" aria-label="Starter prompts">
+          <button class="prompt-chip" type="button" data-prompt="How do you think about career decisions?">
+            Career decisions
+          </button>
+          <button class="prompt-chip" type="button" data-prompt="What matters most to you in work?">
+            Work values
+          </button>
+          <button class="prompt-chip" type="button" data-prompt="How would you handle a tough week?">
+            Tough week
+          </button>
+        </div>
+
+        <form class="composer" id="composer">
+          <label class="sr-only" for="prompt">Message Kunal</label>
+          <textarea
+            id="prompt"
+            name="prompt"
+            class="composer__input"
+            rows="1"
+            placeholder="Ask Kunal how he thinks, decides, or reflects..."
+          ></textarea>
+          <button class="composer__send" type="submit" aria-label="Send message">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M4 11.5L19.5 4l-3.5 16-4.2-5.2L4 11.5Zm8.2 2.2 2.3 2.8 2-9.4-9.1 4.4 3.6 1.2 5.8-5.1-4.6 6.1Z"
+              />
+            </svg>
+          </button>
+        </form>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

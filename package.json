@@ -1,0 +1,34 @@
+{
+  "name": "kunal-digital-twin",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-pages.js",
+    "dev": "wrangler pages dev . --port 8788 --compatibility-date 2026-05-02 --persist-to .wrangler/state",
+    "dev:ai": "wrangler pages dev . --port 8788 --compatibility-date 2026-05-02 --persist-to .wrangler/state --ai AI",
+    "pages:create": "wrangler pages project create kunal-digital-twin --production-branch main --compatibility-date 2026-05-02 --env-file .dev.vars",
+    "deploy": "npm run build && wrangler pages deploy --project-name kunal-digital-twin --env-file .dev.vars",
+    "deploy:preview": "npm run build && wrangler pages deploy --project-name kunal-digital-twin --branch preview --env-file .dev.vars",
+    "db:create:remote": "wrangler d1 create kunal-digital-twin --binding DB --location apac --env-file .dev.vars",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local",
+    "db:migrate:remote": "wrangler d1 migrations apply DB --remote --env-file .dev.vars",
+    "db:inspect:local": "wrangler d1 execute DB --local --command \"SELECT id, category, title, sort_order FROM memories ORDER BY sort_order ASC, title ASC;\"",
+    "db:inspect:remote": "wrangler d1 execute DB --remote --env-file .dev.vars --command \"SELECT id, category, title, sort_order FROM memories ORDER BY sort_order ASC, title ASC;\"",
+    "secret:account": "wrangler pages secret put CLOUDFLARE_ACCOUNT_ID --project-name kunal-digital-twin --env-file .dev.vars",
+    "secret:token": "wrangler pages secret put CLOUDFLARE_API_TOKEN --project-name kunal-digital-twin --env-file .dev.vars",
+    "ingest:chatgpt": "node scripts/import-chatgpt-export.js",
+    "ingest:openai-response": "node scripts/import-openai-response.js",
+    "ingest:openai-response:remote": "node scripts/import-openai-response.js --remote",
+    "ingest:extract": "node scripts/extract-memory-candidates.js",
+    "ingest:review": "node scripts/review-memory-candidates.js",
+    "ingest:review:remote": "node scripts/review-memory-candidates.js --remote",
+    "ingest:approve": "node scripts/set-candidate-status.js approved",
+    "ingest:reject": "node scripts/set-candidate-status.js rejected",
+    "ingest:apply": "node scripts/apply-memory-candidates.js",
+    "ingest:apply:remote": "node scripts/apply-memory-candidates.js --remote",
+    "check": "node --check app.js && node --check functions/api/chat.js && node --check lib/chat-foundation.js && node --check lib/memory-store.js && node --check lib/workers-ai.js && node --check data/kunal-memories.js && node --check scripts/build-pages.js && node --check scripts/import-chatgpt-export.js && node --check scripts/import-openai-response.js && node --check scripts/extract-memory-candidates.js && node --check scripts/review-memory-candidates.js && node --check scripts/set-candidate-status.js && node --check scripts/apply-memory-candidates.js && node --check scripts/_lib/d1.js && node --check scripts/_lib/dev-vars.js && node --check scripts/_lib/chatgpt-export.js && node --check scripts/_lib/workers-ai-rest.js"
+  },
+  "devDependencies": {
+    "wrangler": "^4.87.0"
+  }
+}

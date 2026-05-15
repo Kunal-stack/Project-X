@@ -1,0 +1,17 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "kunal-digital-twin",
+	"pages_build_output_dir": "dist",
+	"compatibility_date": "2026-05-02",
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "kunal-digital-twin",
+			"database_id": "53e8737e-7eda-4aa2-a12d-d6576615494a",
+			"migrations_dir": "migrations"
+		}
+	],
+	"vars": {
+		"CLOUDFLARE_AI_MODEL": "@cf/meta/llama-3.1-8b-instruct"
+	}
+}
