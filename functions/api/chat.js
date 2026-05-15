@@ -1,4 +1,5 @@
 import {
+  buildConceptDefinitionReply,
   buildFoundationReply,
   formatMemorySources,
   rankMemoriesFromCollection
@@ -52,7 +53,9 @@ export async function onRequestPost(context) {
     message
   );
   const sources = formatMemorySources(rankedMemories);
-  const foundationReply = buildFoundationReply(message, rankedMemories);
+  const conceptDefinitionReply = buildConceptDefinitionReply(message, rankedMemories);
+  const foundationReply =
+    conceptDefinitionReply || buildFoundationReply(message, rankedMemories);
 
   let response = {
     reply: foundationReply,
@@ -74,6 +77,14 @@ export async function onRequestPost(context) {
   }
 
   try {
+    if (conceptDefinitionReply) {
+      return Response.json(response, {
+        headers: {
+          "Cache-Control": "no-store"
+        }
+      });
+    }
+
     const aiReply = await generateWorkersAiReply(context.env, message, rankedMemories);
 
     if (aiReply) {
